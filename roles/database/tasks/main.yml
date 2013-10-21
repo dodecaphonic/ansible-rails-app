@@ -1,0 +1,1 @@
+- include: postgresql.yml tags=sidekiq

@@ -1,0 +1,12 @@
+## webapp
+
+webserver_name: ilikeyoureally.com
+deploy_directory: /webapps/ilikeyoureally
+app_name: ilikeyoureally
+
+## stolen from https://github.com/jgrowl/ansible-playbook-ruby-from-src
+rubyTmpDir: /usr/local/src
+rubyUrl: http://cache.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.gz
+rubyCompressedFile: ruby-2.0.0-p247.tar.gz
+rubyName: ruby-2.0.0-p247
+tmpRubyPath: $rubyTmpDir/$rubyName

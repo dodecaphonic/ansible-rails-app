@@ -1,0 +1,20 @@
+- name: Install nginx
+  apt: pkg=nginx state=latest
+
+- name: Remove the default app
+  command: rm -rf /etc/nginx/sites-enabled/default
+
+- name: Remove the app's config, if exists
+  command: rm -rf /etc/nginx/sites-enabled/default
+
+- name: Remove the app's symlink, if exists
+  command: rm -rf /etc/nginx/sites-enabled/ilikeyoureally  
+
+- name: Configure nginx for the app
+  template: src=etc_nginx_sites-available_ilikeyoureally.conf.j2 dest=/etc/nginx/sites-available/ilikeyoureally group=www-data owner=www-data force=yes
+
+- name: Enable the app
+  command: ln -s /etc/nginx/sites-available/ilikeyoureally /etc/nginx/sites-enabled/ilikeyoureally
+
+- name: Restart nginx
+  command: service nginx restart

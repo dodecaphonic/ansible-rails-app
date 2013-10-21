@@ -1,0 +1,10 @@
+---
+- hosts: all
+  user: root
+  vars_files:
+    - vars/defaults.yml
+    
+  roles:
+    - webserver
+    - database
+    - sidekiq

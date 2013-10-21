@@ -1,0 +1,46 @@
+---
+# Ruby from source playbook (https://github.com/jgrowl/ansible-playbook-ruby-from-src)
+- name: upgrade
+  action: apt update_cache=yes upgrade=yes
+
+- name: install ruby dependencies 
+  action: apt pkg=$item state=installed
+  with_items:
+    - build-essential
+    - automake
+    - bison
+    - autoconf
+    - pkg-config
+    - libreadline6
+    - libreadline6-dev
+    - openssl
+    - libssl-dev
+    - curl
+    - git-core
+    - subversion
+    - zlib1g
+    - zlib1g-dev
+    - libyaml-dev
+    - libsqlite3-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - curl
+
+# Install correct version of ruby from source
+- name: ruby-from-src | ensure directory temporary ruby download directory is present
+  file: state=directory path=$rubyTmpDir
+
+- name: ruby-from-src | Download ruby source 
+  get_url: url=$rubyUrl dest=$rubyTmpDir
+
+- name: ruby-from-src | ensure ruby is extracted
+  command: tar -xf $rubyCompressedFile chdir=$rubyTmpDir creates=$tmpRubyPath
+
+- name: ruby-from-src | ensure ruby is configured
+  command: ./configure chdir=$tmpRubyPath creates=$tmpRubyPath/Makefile
+
+- name: ruby-from-src | ensure ruby is compiled
+  command: make chdir=$tmpRubyPath creates=$tmpRubyPath/ruby
+
+- name: ruby-from-src | ensure ruby is installed
+  command: make install chdir=$tmpRubyPath creates=/usr/local/bin/ruby

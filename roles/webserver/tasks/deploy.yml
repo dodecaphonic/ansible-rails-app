@@ -1,0 +1,24 @@
+- name: Install app dependencies 
+  action: apt pkg=$item state=installed
+  with_items:
+    - libpq-dev
+    - nodejs
+
+- name: Create deployment user
+  user: name=deploy comment="Application deployment user"
+
+- name: Create deployment directory
+  file: path=/webapps/{{ app_name }} owner=deploy group=deploy state=directory
+
+- name: Add puma runner
+  template: src=usr_local_bin_run-puma.j2 dest=/usr/local/bin/run-puma force=yes mode=755
+
+- name: Add puma init script
+  template: src=etc_init_d_puma.j2 dest=/etc/init.d/puma force=yes mode=755
+
+- name: Copy puma config
+  template: src=etc_puma.conf.j2 dest=/etc/puma.conf force=yes mode=644
+
+- name: Add puma to upstart
+  command: update-rc.d -f puma defaults
+

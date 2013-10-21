@@ -1,0 +1,1 @@
+- include: sidekiq.yml tags=sidekiq
