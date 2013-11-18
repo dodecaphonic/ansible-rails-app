@@ -1,8 +1,8 @@
 ## webapp
 
-webserver_name: ilikeyoureally.com
-deploy_directory: /webapps/ilikeyoureally
-app_name: ilikeyoureally
+webserver_name: mywebapp.com
+deploy_directory: /webapps/mywebapp
+app_name: mywebapp
 
 ## stolen from https://github.com/jgrowl/ansible-playbook-ruby-from-src
 rubyTmpDir: /usr/local/src
